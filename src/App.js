@@ -1,5 +1,6 @@
 import { Component } from "react";
 import "./App.css";
+import { styles } from "./styles.module.css";
 
 import CardList from "./components/card-list/card-list.component";
 
