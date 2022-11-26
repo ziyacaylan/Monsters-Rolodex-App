@@ -3,6 +3,7 @@ import "./App.css";
 import { styles } from "./styles.module.css";
 
 import CardList from "./components/card-list/card-list.component";
+import SearchBox from "./components/search-box/search-box.component";
 
 class App extends Component {
   constructor() {
@@ -40,26 +41,19 @@ class App extends Component {
   render() {
     const { canavarlar, aramaAlani } = this.state;
     const { aramaDegisikligi } = this;
-    console.log("render");
+    // console.log("render App");
     const filteredMonsters = canavarlar.filter((item) => {
       return item.name.toLowerCase().includes(aramaAlani);
     });
     return (
       <div className="App">
-        <input
-          className="search-box"
-          type="search"
-          placeholder="search monsters"
-          onChange={aramaDegisikligi}
+        <h1 className="monsters-title">CANAVARLAR</h1>
+        <SearchBox
+          onChangeHandler={aramaDegisikligi}
+          placeholder="canavarları ara"
+          className="monsters-search-box"
         />
-        {/* {filteredMonsters.map((canavar) => {
-          return (
-            <div key={canavar.id}>
-              <h1>{canavar.name}</h1>
-            </div>
-          );
-        })} */}
-        <CardList />
+        <CardList canavarlar={filteredMonsters} />
       </div>
     );
   }
