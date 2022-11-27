@@ -5,7 +5,7 @@ import "./card-list.styles.css";
 const CardList = ({ canavarlar }) => (
   <div className="card-list">
     {canavarlar.map((canavar) => {
-      return <Card canavar={canavar} />;
+      return <Card key={canavar.id} canavar={canavar} />;
     })}
   </div>
 );
