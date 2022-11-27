@@ -1,18 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
-import { styles } from "./styles.module.css";
+// import { styles } from "./styles.module.css";
 
 import CardList from "./components/card-list/card-list.component";
 import SearchBox from "./components/search-box/search-box.component";
 
 const App = () => {
-  console.log("render");
-  const [aramaAlani, setAramaAlani] = useState("a"); // value, setValue
-  console.log(aramaAlani);
+  // console.log("render");
+  const [aramaAlani, setAramaAlani] = useState(""); // value, setValue
+  const [canavarlar, setCanavarlar] = useState([]);
+  // const [dizeAlani, setDizeAlani] = useState("");
+  const [filtelenmisCanavarlar, setFiltrelenmisCanavarlar] =
+    useState(canavarlar);
+  console.log("işlendi");
+
+  useEffect(() => {
+    console.log("effect ateşlendi...");
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((users) => setCanavarlar(users));
+  }, []);
+
+  useEffect(() => {
+    const newFilteredMonsters = canavarlar.filter((item) => {
+      return item.name.toLowerCase().includes(aramaAlani);
+    });
+    setFiltrelenmisCanavarlar(newFilteredMonsters);
+  }, [canavarlar, aramaAlani]);
+
+  // console.log(aramaAlani);
   const aramaDegisikligi = (e) => {
     const aramaAlaniDizesi = e.target.value.toLowerCase();
     setAramaAlani(aramaAlaniDizesi);
   };
+  // const dizeDegisimi = (event) => {
+  //   setDizeAlani(event.target.value);
+  // };
   return (
     <div className="App">
       <h1 className="monsters-title">CANAVARLAR</h1>
@@ -21,7 +44,12 @@ const App = () => {
         placeholder="canavarları ara"
         className="monsters-search-box"
       />
-      {/* <CardList canavarlar={filteredMonsters} /> */}
+      {/* <SearchBox
+        onChangeHandler={dizeDegisimi}
+        placeholder="dize ayarla"
+        className="monsters-search-box"
+      /> */}
+      <CardList canavarlar={filtelenmisCanavarlar} />
     </div>
   );
 };
