@@ -1,7 +1,12 @@
 import React from "react";
 import "./card.styles.css";
+import { Canavar } from "../../App";
 
-const Card = ({ canavar }) => {
+type CardProps = {
+  canavar: Canavar;
+};
+
+const Card = ({ canavar }: CardProps) => {
   const { id, name, email } = canavar;
   return (
     <div className="card-container" key={id}>
